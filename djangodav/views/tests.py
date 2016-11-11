@@ -251,7 +251,7 @@ class TestView(TestCase):
                 'CONTENT_LENGTH': '44'
             },
             method='GET',
-            read=Mock(side_effect=[u"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n", u"<foo/>", u""])
+            read=Mock(side_effect=["<?xml version=\"1.0\" encoding=\"utf-8\"?>\n", "<foo/>", ""])
         )
         v = DavView(request=request, get=Mock(return_value=HttpResponse()), _allowed_methods=Mock(return_value=['GET']))
         v.dispatch(request, '/path/')

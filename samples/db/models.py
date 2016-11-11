@@ -43,7 +43,7 @@ class CollectionModel(BaseDavModel):
 class ObjectModel(BaseDavModel):
     parent = models.ForeignKey(CollectionModel, blank=True, null=True)
     size = models.IntegerField(default=0)
-    content = models.TextField(default=u"")
+    content = models.TextField(default="")
     md5 = models.CharField(max_length=255)
 
     class Meta:

@@ -52,11 +52,11 @@ class TestFSDavResource(TestCase):
     @patch('djangodav.fs.resources.os.path.getsize')
     def test_get_size(self, getsize):
         getsize.return_value = 42
-        self.assertEquals(self.resource.getcontentlength, 42)
+        self.assertEqual(self.resource.getcontentlength, 42)
         getsize.assert_called_with('/some/folder/path/to/name')
 
     def test_get_abs_path(self):
-        self.assertEquals(self.resource.get_abs_path(), '/some/folder/path/to/name')
+        self.assertEqual(self.resource.get_abs_path(), '/some/folder/path/to/name')
 
     @patch('djangodav.fs.resources.os.listdir')
     def test_get_children(self, listdir):
