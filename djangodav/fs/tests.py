@@ -44,7 +44,7 @@ class TestFSDavResource(TestCase):
         isfile.assert_called_with('/some/folder/path/to/name')
 
     @patch('djangodav.fs.resources.os.path.exists')
-    def test_isfile(self, exists):
+    def test_isexists(self, exists):
         exists.return_value = True
         self.assertTrue(self.resource.exists)
         exists.assert_called_with('/some/folder/path/to/name')
