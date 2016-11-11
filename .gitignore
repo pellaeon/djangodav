@@ -24,3 +24,9 @@
 *.pyc
 env
 .idea
+
+.coverage
+*.egg-info/
+.cache/
+.tox/
+htmlcov/
