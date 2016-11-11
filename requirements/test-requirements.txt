@@ -1,0 +1,5 @@
+pytest>=2.8.6
+pytest-django
+pytest-cov
+mock
+-e .

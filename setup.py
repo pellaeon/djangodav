@@ -25,13 +25,13 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name='DjangoDav',
+    name='DjangoDav-py3',
     version=__import__('djangodav').__version__,
     description=('A WebDAV server for Django.'),
     long_description = open('README.rst').read(),
-    author='Alexander Klimenko',
+    author='Alexander Klimenko, Pellaeon Lin',
     author_email='alex@erix.ru',
-    url='https://github.com/meteozond/djangodav',
+    url='https://github.com/pellaeon/djangodav',
     packages=find_packages(),
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -43,10 +43,10 @@ setup(
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
     install_requires=["lxml", "Django>=1.3.0"],
-    tests_require=["Django>=1.3.0", "mock==1.0.1"],
     include_package_data=True,
     zip_safe=False,
     test_suite='runtests.runtests'

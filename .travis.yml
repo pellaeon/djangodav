@@ -1,13 +1,46 @@
 language: python
 python:
-  - "2.7"
-  - "2.6"
+  - "3.5"
+
+sudo: false
 env:
-  - DJANGO_VERSION=1.6.11
-  - DJANGO_VERSION=1.7.7
+  - TOX_ENV=py35-django110
+  - TOX_ENV=py34-django110
+  - TOX_ENV=py27-django110
+  - TOX_ENV=py35-django19
+  - TOX_ENV=py34-django19
+  - TOX_ENV=py27-django19
+  - TOX_ENV=py35-django18
+  - TOX_ENV=py34-django18
+  - TOX_ENV=py33-django18
+  - TOX_ENV=py27-django18
+  - TOX_ENV=py35-djangomaster
+  - TOX_ENV=py34-djangomaster
+  - TOX_ENV=py27-djangomaster
+  - TOX_ENV=py27-django17
+  - TOX_ENV=py27-django16
+  - TOX_ENV=py27-django15
+
 matrix:
-  exclude:
-   - python: "2.6"
-     env: DJANGO_VERSION=1.7.7
-install: pip install -q Django==$DJANGO_VERSION djangorestframework==3.2.5
-script: python setup.py test
+  fast_finish: true
+  allow_failures:
+    - env: TOX_ENV=py27-djangomaster
+    - env: TOX_ENV=py34-djangomaster
+    - env: TOX_ENV=py35-djangomaster
+    - env: TOX_ENV=py27-django17
+    - env: TOX_ENV=py27-django16
+    - env: TOX_ENV=py27-django15
+
+install:
+  # Virtualenv < 14 is required to keep the Python 3.2 builds running.
+  - pip install tox "virtualenv<14"
+
+script:
+  - tox -e $TOX_ENV
+
+after_success:
+  - pip install codecov
+  - codecov -e TOX_ENV
+
+notifications:
+  email: false
