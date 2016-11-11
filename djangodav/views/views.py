@@ -1,3 +1,5 @@
+from future.standard_library import install_aliases
+install_aliases()
 import urllib.request, urllib.parse, urllib.error, re
 try:
     import urllib.parse
