@@ -1,3 +1,6 @@
+import random
+import string
+
 from django.conf import settings
 
 INSTALLED_APPS = (
@@ -16,3 +19,5 @@ MIDDLEWARE_CLASSES = ()
 
 from tempfile import gettempdir
 WEBDAV_ROOT = gettempdir()
+
+SECRET_KEY = ''.join([random.choice(string.ascii_letters) for x in range(40)])
