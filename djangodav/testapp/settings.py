@@ -17,6 +17,21 @@ DATABASES = {
     },
 }
 
+# Deprecated in 1.10
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+)
+
+# Introduced in 1.8
+# https://docs.djangoproject.com/en/1.10/ref/templates/upgrading/
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+    },
+]
+
 ROOT_URLCONF = 'djangodav.tests.urls'
 MIDDLEWARE_CLASSES = ()
 
