@@ -3,7 +3,15 @@ DjangoDav
 
 Production ready WebDav extension for Django.
 
-.. image:: https://travis-ci.org/meteozond/djangodav.svg
+.. image:: https://travis-ci.org/pellaeon/djangodav.svg
+
+Versions supported
+------------------
+
+- Django 1.8, 1.9, 1.10: Python 2.7, 3.4, 3.5
+- Django 1.7: Python 2.7
+
+Django <1.7 support has been dropped, since pytest-django `no longer supports it<https://github.com/pytest-dev/pytest-django/commit/8e6fab6f93e8fe8c2474c8971f8774322d13d7ee>`_. Support could be re-added by downgrading pytest-django.
 
 Motivation
 ----------
@@ -76,3 +84,8 @@ How to create simple filesystem webdav resource
         (r'^fsdav(?P<path>.*)$', DavView.as_view(resource_class=MyDavResource, lock_class=DummyLock,
          acl_class=FullAcl)),
     )
+
+Testing
+-------
+
+Simply install and run `tox`.
