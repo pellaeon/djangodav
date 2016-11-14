@@ -23,11 +23,11 @@ from future import standard_library
 standard_library.install_aliases()
 import hashlib
 import mimetypes
-from sys import getfilesystemencoding
 import os
 import datetime
 import shutil
 import urllib.request, urllib.parse, urllib.error
+from builtins import str
 
 from django.http import HttpResponse
 from django.utils.http import http_date
@@ -36,10 +36,6 @@ from django.conf import settings
 from djangodav.base.resources import BaseDavResource
 from djangodav.responses import ResponseException
 from djangodav.utils import safe_join, url_join
-
-
-fs_encoding = getfilesystemencoding()
-
 
 class BaseFSDavResource(BaseDavResource):
     """Implements an interface to the file system. This can be subclassed to provide
@@ -85,12 +81,7 @@ class BaseFSDavResource(BaseDavResource):
     def get_children(self):
         """Return an iterator of all direct children of this resource."""
         for child in os.listdir(self.get_abs_path()):
-            try:
-                is_unicode = isinstance(child, str)
-            except NameError:  # Python 3 fix
-                is_unicode = isinstance(child, str)
-            if not is_unicode:
-                child = child.decode(fs_encoding)
+            assert isinstance(child, str)
             yield self.clone(url_join(*(self.path + [child])))
 
     def write(self, content):
