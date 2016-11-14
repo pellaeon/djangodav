@@ -82,7 +82,7 @@ class BaseFSDavResource(BaseDavResource):
         """Return an iterator of all direct children of this resource."""
         for child in os.listdir(self.get_abs_path()):
             try:
-                is_unicode = isinstance(child, str)
+                is_unicode = isinstance(child, unicode)
             except NameError:  # Python 3 fix
                 is_unicode = isinstance(child, str)
             if not is_unicode:
