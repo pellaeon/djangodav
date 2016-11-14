@@ -1,6 +1,10 @@
-import urllib, re
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+import urllib.request, urllib.parse, urllib.error, re
 try:
-    import urlparse
+    import urllib.parse
 except ImportError:
     from urllib import parse as urlparse
 from sys import version_info as python_version
@@ -26,6 +30,7 @@ from django import VERSION as django_version, get_version
 PATTERN_IF_DELIMITER = re.compile(r'(<([^>]+)>)|(\(([^\)]+)\))')
 
 class DavView(View):
+    # TODO introduce abstract base classes
     resource_class = None
     lock_class = None
     acl_class = None
@@ -247,11 +252,11 @@ class DavView(View):
             raise Http404("Resource doesn't exists")
         if not self.has_access(self.resource, 'read'):
             return self.no_access()
-        dst = urlparse.unquote(request.META.get('HTTP_DESTINATION', '')).decode(self.xml_encoding)
+        dst = urllib.parse.unquote(request.META.get('HTTP_DESTINATION', ''))
         if not dst:
             return HttpResponseBadRequest('Destination header missing.')
-        dparts = urlparse.urlparse(dst)
-        sparts = urlparse.urlparse(request.build_absolute_uri())
+        dparts = urllib.parse.urlparse(dst)
+        sparts = urllib.parse.urlparse(request.build_absolute_uri())
         if sparts.scheme != dparts.scheme or sparts.netloc != dparts.netloc:
             return HttpResponseBadGateway('Source and destination must have the same scheme and host.')
         # adjust path for our base url:
@@ -339,7 +344,7 @@ class DavView(View):
         body = D.activelock(*([
             D.locktype(locktype_obj),
             D.lockscope(lockscope_obj),
-            D.depth(unicode(depth)),
+            D.depth(str(depth)),
             D.timeout("Second-%s" % timeout),
             D.locktoken(D.href('opaquelocktoken:%s' % token))]
             + ([owner_obj] if owner_obj is not None else [])

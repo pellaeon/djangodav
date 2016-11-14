@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 # Portions (c) 2014, Alexander Klimenko <alex@erix.ru>
 # All rights reserved.
 #
@@ -18,6 +19,8 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with DjangoDav.  If not, see <http://www.gnu.org/licenses/>.
+from builtins import range
+from builtins import object
 from operator import and_
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q

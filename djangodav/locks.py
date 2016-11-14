@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 # Portions (c) 2014, Alexander Klimenko <alex@erix.ru>
 # All rights reserved.
 #
@@ -18,6 +19,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with DjangoDav.  If not, see <http://www.gnu.org/licenses/>.
+from builtins import str
 from uuid import uuid4
 
 from djangodav.base.locks import BaseLock
@@ -28,7 +30,7 @@ class DummyLock(BaseLock):
         pass
 
     def acquire(self, *args, **kwargs):
-        return unicode(uuid4())
+        return str(uuid4())
 
     def release(self, token):
         return True

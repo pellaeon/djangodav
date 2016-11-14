@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 # Portions (c) 2014, Alexander Klimenko <alex@erix.ru>
 # All rights reserved.
 #
@@ -19,8 +20,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with DjangoDav.  If not, see <http://www.gnu.org/licenses/>.
 
+from future import standard_library
+standard_library.install_aliases()
 try:
-    import httplib
+    import http.client
 except ImportError:
     from http import client as httplib
 from django.http import HttpResponse
@@ -42,40 +45,40 @@ class ResponseException(Exception):
 
 
 class HttpResponsePreconditionFailed(HttpResponse):
-    status_code = httplib.PRECONDITION_FAILED
+    status_code = http.client.PRECONDITION_FAILED
 
 
 class HttpResponseMediatypeNotSupported(HttpResponse):
-    status_code = httplib.UNSUPPORTED_MEDIA_TYPE
+    status_code = http.client.UNSUPPORTED_MEDIA_TYPE
 
 
 class HttpResponseMultiStatus(HttpResponse):
-    status_code = httplib.MULTI_STATUS
+    status_code = http.client.MULTI_STATUS
 
 
 class HttpResponseNotImplemented(HttpResponse):
-    status_code = httplib.NOT_IMPLEMENTED
+    status_code = http.client.NOT_IMPLEMENTED
 
 
 class HttpResponseBadGateway(HttpResponse):
-    status_code = httplib.BAD_GATEWAY
+    status_code = http.client.BAD_GATEWAY
 
 
 class HttpResponseCreated(HttpResponse):
-    status_code = httplib.CREATED
+    status_code = http.client.CREATED
 
 
 class HttpResponseNoContent(HttpResponse):
-    status_code = httplib.NO_CONTENT
+    status_code = http.client.NO_CONTENT
 
 
 class HttpResponseConflict(HttpResponse):
-    status_code = httplib.CONFLICT
+    status_code = http.client.CONFLICT
 
 
 class HttpResponseLocked(HttpResponse):
-    status_code = httplib.LOCKED
+    status_code = http.client.LOCKED
 
 
 class HttpResponseUnAuthorized(HttpResponse):
-    status_code = httplib.UNAUTHORIZED
+    status_code = http.client.UNAUTHORIZED

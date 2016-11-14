@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 # Portions (c) 2014, Alexander Klimenko <alex@erix.ru>
 # All rights reserved.
 #

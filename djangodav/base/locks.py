@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 # Portions (c) 2014, Alexander Klimenko <alex@erix.ru>
 # All rights reserved.
 #
@@ -20,6 +21,7 @@
 # along with DjangoDav.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from builtins import object
 class BaseLock(object):
     def __init__(self, resource):
         self.resource = resource

@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 # Portions (c) 2014, Alexander Klimenko <alex@erix.ru>
 # All rights reserved.
 #
@@ -18,6 +19,8 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with DjangoDav.  If not, see <http://www.gnu.org/licenses/>.
+from builtins import str
+from builtins import object
 from hashlib import md5
 from mimetypes import guess_type
 
@@ -33,9 +36,10 @@ class BaseDavResource(object):
         '{DAV:}getlastmodified', '{DAV:}resourcetype', '{DAV:}displayname'
     ]
 
+    path = []
+
     def __init__(self, path):
-        self.path = []
-        path = path.strip("/")
+        path = str(path).strip("/")
         if path:
             self.path = path.split("/")
 

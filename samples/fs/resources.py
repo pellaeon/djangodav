@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from django.conf import settings
 from djangodav.base.resources import MetaEtagMixIn
 from djangodav.fs.resources import DummyFSDAVResource

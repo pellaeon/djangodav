@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 # Portions (c) 2014, Alexander Klimenko <alex@erix.ru>
 # All rights reserved.
 #
@@ -19,6 +20,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with DjangoDav.  If not, see <http://www.gnu.org/licenses/>.
 
+from builtins import object
 from django.db import models
 from django.utils.timezone import now
 
@@ -28,7 +30,7 @@ class BaseDavModel(models.Model):
     created = models.DateTimeField(default=now)
     modified = models.DateTimeField(default=now)
 
-    class Meta:
+    class Meta(object):
         abstract = True
 
 
@@ -36,7 +38,7 @@ class CollectionModel(BaseDavModel):
     parent = models.ForeignKey('self', blank=True, null=True)
     size = 0
 
-    class Meta:
+    class Meta(object):
         unique_together = (('parent', 'name'),)
 
 
@@ -46,5 +48,5 @@ class ObjectModel(BaseDavModel):
     content = models.TextField(default=u"")
     md5 = models.CharField(max_length=255)
 
-    class Meta:
+    class Meta(object):
         unique_together = (('parent', 'name'),)

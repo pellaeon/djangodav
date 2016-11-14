@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 # Portions (c) 2014, Alexander Klimenko <alex@erix.ru>
 # All rights reserved.
 #
@@ -20,6 +21,7 @@
 # along with DjangoDav.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from builtins import str
 import datetime, time, calendar
 from wsgiref.handlers import format_date_time
 from django.utils.feedgenerator import rfc2822_date
@@ -61,7 +63,7 @@ def get_property_tag(res, name):
         return D(name)
     try:
         if hasattr(res, name):
-            return D(name, unicode(getattr(res, name)))
+            return D(name, str(getattr(res, name)))
     except AttributeError:
         return
 
