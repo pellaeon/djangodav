@@ -25,6 +25,7 @@ from django.utils.functional import cached_property
 from django.utils.timezone import now
 from djangodav.base.resources import BaseDavResource
 from djangodav.utils import url_join
+from functools import reduce
 
 
 class BaseDBDavResource(BaseDavResource):
