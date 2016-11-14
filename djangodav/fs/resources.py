@@ -31,6 +31,7 @@ import urllib.request, urllib.parse, urllib.error
 
 from django.http import HttpResponse
 from django.utils.http import http_date
+from django.conf import settings
 
 from djangodav.base.resources import BaseDavResource
 from djangodav.responses import ResponseException
@@ -45,13 +46,13 @@ class BaseFSDavResource(BaseDavResource):
     a virtual file system (like say in MySQL). This default implementation simply uses
     python's os library to do most of the work."""
 
-    root = None
+    root = settings.MEDIA_ROOT
 
     def get_abs_path(self):
         """Return the absolute path of the resource. Used internally to interface with
         an actual file system. If you override all other methods, this one will not
         be used."""
-        return os.path.join(self.root, *self.path)
+        return os.path.join(os.path.abspath(self.root), *self.path)
 
     @property
     def getcontentlength(self):
