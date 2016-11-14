@@ -19,6 +19,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with DjangoDav.  If not, see <http://www.gnu.org/licenses/>.
 from uuid import uuid4
+from builtins import str
 
 from djangodav.base.locks import BaseLock
 

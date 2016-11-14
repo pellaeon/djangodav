@@ -23,6 +23,7 @@
 import datetime, time, calendar
 from wsgiref.handlers import format_date_time
 from django.utils.feedgenerator import rfc2822_date
+from builtins import str
 
 try:
     from email.utils import parsedate_tz

@@ -8,6 +8,7 @@ except ImportError:
 from sys import version_info as python_version
 from django.utils.timezone import now
 from lxml import etree
+from builtins import str
 
 from django.http import HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseBadRequest, \
     HttpResponseNotModified, HttpResponseRedirect, Http404
