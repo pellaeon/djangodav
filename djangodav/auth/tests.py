@@ -147,7 +147,7 @@ class UnicodeRestAuthTest(RestAuthTest):
     viewclass = TestUnicodeDAVView
 
     def setUp(self):
-        super().setUp()
+        super(UnicodeRestAuthTest, self).setUp()
         os.mkdir(os.path.join(os.path.dirname(__file__), '雲'))
 
     def tearDown(self):
