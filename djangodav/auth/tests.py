@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from os.path import dirname
+import os
 from base64 import b64encode
 
 from django.test import TestCase
@@ -28,17 +28,29 @@ from django.http.response import HttpResponse
 
 class TestFSResource(DummyReadFSDavResource):
     """ just a test resource """
-    root = dirname(__file__)
+    root = os.path.dirname(__file__)
 
 class TestDAVView(RestAuthViewMixIn, DavView):
     """ dummy view """
-    resource_class= TestFSResource 
+    resource_class= TestFSResource
+    acl_class = ReadOnlyAcl
+    lock_class = DummyLock
+
+class TestUnicodeFSResource(DummyReadFSDavResource):
+    """ just a test resource """
+    root = os.path.join(os.path.dirname(__file__), '雲')
+
+class TestUnicodeDAVView(RestAuthViewMixIn, DavView):
+    """ dummy view """
+    resource_class = TestUnicodeFSResource
     acl_class = ReadOnlyAcl
     lock_class = DummyLock 
             
 class RestAuthTest(TestCase):
     """ test authentication through Django Rest Framework. This will
         only work when RestFramework is actually installed.          """
+
+    viewclass = TestDAVView
     
     def setUp(self):
         self.user = get_user_model()(username='root', is_active=True)
@@ -62,7 +74,7 @@ class RestAuthTest(TestCase):
     def test_auth_session(self):
         """ test whether we can authenticate through Django session """        
         
-        class RestAuthDavView(TestDAVView):
+        class RestAuthDavView(self.viewclass):
             authentications = (RestSessionAuthentication(),)
         v = RestAuthDavView.as_view()
             
@@ -84,7 +96,7 @@ class RestAuthTest(TestCase):
     def test_auth_basic(self):
         """ test whether we can authenticate through Basic auth """
 
-        class RestAuthDavView(TestDAVView):
+        class RestAuthDavView(self.viewclass):
             authentications = (RestBasicAuthentication(),)
         v = RestAuthDavView.as_view()
         
@@ -109,7 +121,7 @@ class RestAuthTest(TestCase):
     def test_auth_multiple(self):
         """ test whether we can authenticate through either Session or Basic auth """
         
-        class RestAuthDavView(TestDAVView):
+        class RestAuthDavView(self.viewclass):
             authentications = (RestBasicAuthentication(), RestSessionAuthentication(),)
         v = RestAuthDavView.as_view()
         
@@ -129,3 +141,13 @@ class RestAuthTest(TestCase):
         request = RequestFactory().get('/', **{'HTTP_AUTHORIZATION': 'Basic %s' % b64encode(b'root:test')})
         response = v(request, '/')
         self.assertIsAuthorized(response)
+
+class UnicodeRestAuthTest(RestAuthTest):
+    viewclass = TestUnicodeDAVView
+
+    def setUp(self):
+        super().setUp()
+        os.mkdir(os.path.join(os.path.dirname(__file__), '雲'))
+
+    def tearDown(self):
+        os.rmdir(os.path.join(os.path.dirname(__file__), '雲'))
