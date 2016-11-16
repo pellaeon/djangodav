@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 # Portions (c) 2014, Alexander Klimenko <alex@erix.ru>
 # All rights reserved.
@@ -102,3 +103,10 @@ class TestBaseDavResource(TestCase):
 
         dst.create_collection.assert_called_with()
         self.assertEqual(child.copy.call_count, 0)
+
+class TestUnicodeBaseDavResource(TestCase):
+    def setUp(self):
+        self.resource = BaseDavResource("/山/平/海")
+
+    def test_path(self):
+        self.assertEqual(self.resource.path, ['山', '平', '海'])
