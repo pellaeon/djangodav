@@ -326,7 +326,7 @@ class TestView(TestCase):
         self.assertEqual(resp['Etag'], "0" * 40)
         self.assertEqual(resp['Content-Type'], "text/plain")
         self.assertEqual(resp['Last-Modified'], "Wed, 24 Dec 2014 06:00:00 +0000")
-        self.assertEqual(resp.content, "C" * 42)
+        self.assertEqual(resp.content, b"C" * 42)
 
     @patch('djangodav.views.render_to_response', Mock(return_value=HttpResponse('listing')))
     def test_head_object(self):
@@ -336,7 +336,7 @@ class TestView(TestCase):
         resp = v.head(None, path)
         self.assertEqual("text/plain", resp['Content-Type'])
         self.assertEqual("Wed, 24 Dec 2014 06:00:00 +0000", resp['Last-Modified'])
-        self.assertEqual("", resp.content)
+        self.assertEqual(b"", resp.content)
         self.assertEqual("0", resp['Content-Length'])
 
     @patch('djangodav.views.views.render_to_response', Mock(return_value=HttpResponse('listing')))
@@ -345,7 +345,7 @@ class TestView(TestCase):
         v = DavView(path=path, acl_class=FullAcl, base_url='/base', _allowed_methods=Mock(return_value=['ALL']))
         v.__dict__['resource'] = MockCollection(path)
         resp = v.get(None, path)
-        self.assertEqual("listing", resp.content)
+        self.assertEqual(b"listing", resp.content)
         self.assertEqual("Wed, 24 Dec 2014 06:00:00 +0000", resp['Last-Modified'])
 
     def test_head_collection(self):
@@ -353,7 +353,7 @@ class TestView(TestCase):
         v = DavView(path=path, acl_class=FullAcl, base_url='/base', _allowed_methods=Mock(return_value=['ALL']))
         v.__dict__['resource'] = MockCollection(path)
         resp = v.head(None, path)
-        self.assertEqual("", resp.content)
+        self.assertEqual(b"", resp.content)
         self.assertEqual("Wed, 24 Dec 2014 06:00:00 +0000", resp['Last-Modified'])
         self.assertEqual("0", resp['Content-Length'])
 
