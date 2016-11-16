@@ -48,7 +48,7 @@ class BaseFSDavResource(BaseDavResource):
         """Return the absolute path of the resource. Used internally to interface with
         an actual file system. If you override all other methods, this one will not
         be used."""
-        return os.path.join(os.path.abspath(self.root), *self.path)
+        return str(os.path.join(os.path.abspath(self.root), *self.path))
 
     @property
     def getcontentlength(self):
